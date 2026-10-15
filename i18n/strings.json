@@ -1,0 +1,69 @@
+{
+ "_comment": "zh-cn / zh-tw strings for this plugin's stages, keyed as vpipe's web-UI catalogue keys them. vpipe has no way yet for a plugin to supply UI strings, so the stages render their English StageSpec text; these are kept here, with the plugin, for when it does. The lora/lora2 keys are not translated yet.",
+ "locales": [
+  "zh-cn",
+  "zh-tw"
+ ],
+ "strings": {
+  "stage.ming-image-conditioner.name": [
+   "Ming-Image 条件编码器",
+   "Ming-Image 條件編碼器"
+  ],
+  "stage.ming-image-conditioner.doc": [
+   "Ming-Image 的文本条件：提示词经由 BailingMoeV2 多模态大模型（带 256 个学习得到的查询 token）和一个 Qwen2 连接器，变成 DiT 的双流标题条件。接到使用 Ming-Image 检查点的 generate-image。",
+   "Ming-Image 的文字條件：提示詞經由 BailingMoeV2 多模態大模型（帶 256 個學習得到的查詢 token）和一個 Qwen2 連接器，變成 DiT 的雙流標題條件。接到使用 Ming-Image 檢查點的 generate-image。"
+  ],
+  "cfg.ming-image-conditioner.hf_dir": [
+   "Ming-Image 检查点根目录（包含 mllm/、connector/、mlp/ 和 transformer/）。model 输入端口上的 model-select 源会覆盖它",
+   "Ming-Image 檢查點根目錄（包含 mllm/、connector/、mlp/ 和 transformer/）。model 輸入埠上的 model-select 來源會覆蓋它"
+  ],
+  "cfg.ming-image-conditioner.unload_when_idle": [
+   "约 32 GB 的多模态大模型在两个提示词之间如何处理——它在整个去噪期间都处于空闲。\"auto\"（默认）在它与 DiT 加上余量放不进本机内存时释放它；\"destroy\" 总是释放（每个新提示词重新加载一次）；\"keep\" 保留。重复的提示词从不重新加载：它的条件会被保留",
+   "約 32 GB 的多模態大模型在兩個提示詞之間如何處理——它在整個去雜訊期間都處於閒置。\"auto\"（預設）在它與 DiT 加上餘量放不進本機記憶體時釋放它；\"destroy\" 總是釋放（每個新提示詞重新載入一次）；\"keep\" 保留。重複的提示詞從不重新載入：它的條件會被保留"
+  ],
+  "cfg.ming-image-conditioner.stream": [
+   "是否每个提示词都从磁盘逐层读取多模态大模型，而不是常驻内存：\"auto\"（默认）在本机放不下它时流式读取，\"on\" / \"off\" 强制",
+   "是否每個提示詞都從磁碟逐層讀取多模態大模型，而不是常駐記憶體：\"auto\"（預設）在本機放不下它時串流讀取，\"on\" / \"off\" 強制"
+  ],
+  "port.ming-image-conditioner.prompt": [
+   "提示词文本（FlexData 字符串或 {text: ...}）",
+   "提示詞文字（FlexData 字串或 {text: ...}）"
+  ],
+  "port.ming-image-conditioner.model": [
+   "可选的模型引用（model-select）；覆盖 hf_dir",
+   "可選的模型參照（model-select）；覆蓋 hf_dir"
+  ],
+  "port.ming-image-conditioner.conditioning": [
+   "bf16 [256 + N, 3840]，送往 generate-image 的 conditioning 输入端口：先是连接器的 256 行标题特征（2560 宽，其余补零），再是多模态大模型的 N 行模板。边带的 `ming_query_rows` 指出第一段的结束处。只有 Ming-Image 的 DiT 读取它",
+   "bf16 [256 + N, 3840]，送往 generate-image 的 conditioning 輸入埠：先是連接器的 256 列標題特徵（2560 寬，其餘補零），再是多模態大模型的 N 列範本。邊帶的 `ming_query_rows` 指出第一段的結束處。只有 Ming-Image 的 DiT 讀取它"
+  ],
+  "stage.ming-image-model-config.name": [
+   "Ming-Image 模型配置",
+   "Ming-Image 模型設定"
+  ],
+  "stage.ming-image-model-config.doc": [
+   "源：Ming-Image 专属参数——静态时间偏移、参考管道自己的两个引导控制，以及运行时 LoRA。发一个节拍即结束；若接了 trigger 输入端口，则每收到一个节拍发一次。",
+   "來源：Ming-Image 專屬參數——靜態時間偏移、參考管道自己的兩個引導控制，以及執行期 LoRA。發一個節拍即結束；若接了 trigger 輸入埠，則每收到一個節拍發一次。"
+  ],
+  "cfg.ming-image-model-config.shift": [
+   "覆盖静态时间偏移。未设置 => 检查点自己的（scheduler_config.json：6.0）。参考实现在所有尺寸上都使用这一静态偏移；scheduler-select 节拍中的 shift 不会被采用，因为该阶段在未设置时也会发出 1.15",
+   "覆蓋靜態時間偏移。未設定 => 檢查點自己的（scheduler_config.json：6.0）。參考實作在所有尺寸上都使用這一靜態偏移；scheduler-select 節拍中的 shift 不會被採用，因為該階段在未設定時也會發出 1.15"
+  ],
+  "cfg.ming-image-model-config.cfg_truncation": [
+   "CFG 截断（参考管道的）：一旦 (1 - sigma) 超过此值就关闭引导，同时省去负向那一遍。未设置 => 1.0，即从不。只在 generate-image 的 guidance_scale > 1 时有意义",
+   "CFG 截斷（參考管道的）：一旦 (1 - sigma) 超過此值就關閉引導，同時省去負向那一遍。未設定 => 1.0，即從不。只在 generate-image 的 guidance_scale > 1 時有意義"
+  ],
+  "cfg.ming-image-model-config.cfg_normalization": [
+   "CFG 重新归一化（参考管道的）：把引导后预测的范数钳制为条件预测范数的这一倍数。未设置 => 关闭。只在 guidance_scale > 1 时有意义",
+   "CFG 重新正規化（參考管道的）：把引導後預測的範數鉗制為條件預測範數的這一倍數。未設定 => 關閉。只在 guidance_scale > 1 時有意義"
+  ],
+  "port.ming-image-model-config.trigger": [
+   "可选的节拍，用于控制何时重新发出配置。负载内容不限——收到本身就是信号。未接时，本阶段每次运行只发一次",
+   "可選的節拍，用於控制何時重新發出設定。負載內容不限——收到本身就是訊號。未接時，本階段每次執行只發一次"
+  ],
+  "port.ming-image-model-config.model_config": [
+   "Ming-Image 参数，作为一个 FlexData 对象 {model_family: ming-image，以及设置了的键}。接到 generate-image 的 model_config 输入端口",
+   "Ming-Image 參數，作為一個 FlexData 物件 {model_family: ming-image，以及設定了的鍵}。接到 generate-image 的 model_config 輸入埠"
+  ]
+ }
+}

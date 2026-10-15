@@ -1,0 +1,65 @@
+{
+  "id": "ming-image-text-to-image",
+  "stages": [
+    {
+      "id": "model-select",
+      "type": "model-select",
+      "iports": [],
+      "config": {
+        "hf_dir": "inclusionAI/Ming-Image-0.1-Design"
+      }
+    },
+    {
+      "id": "text-prompt",
+      "type": "text-prompt",
+      "iports": [],
+      "config": {
+        "text": "Landing page for a productivity app called Flow. Clean minimal design, white background, generous whitespace. Top nav with the wordmark 'Flow' on the left and links Product, Pricing, Docs on the right. Centered hero with a bold headline 'Focus without the noise' and a subtle gray subheading. A single purple call-to-action button labeled 'Start free'. Below the hero, three feature cards with small icons, soft rounded corners and soft shadows. Modern sans-serif typography."
+      }
+    },
+    {
+      "id": "ming-image-conditioner",
+      "type": "ming-image-conditioner",
+      "iports": [
+        { "src": "text-prompt", "oport": 0 },
+        { "src": "model-select", "oport": 0 }
+      ],
+      "config": {}
+    },
+    {
+      "id": "generate-image",
+      "type": "generate-image",
+      "iports": [
+        { "src": "ming-image-conditioner", "oport": 0 },
+        { "src": "", "oport": 0 },
+        { "src": "model-select", "oport": 0 }
+      ],
+      "config": {
+        "height": 2048,
+        "width": 2048,
+        "steps": 11,
+        "seed": 42
+      }
+    },
+    {
+      "id": "vae-decode",
+      "type": "vae-decode",
+      "iports": [
+        { "src": "generate-image", "oport": 0 },
+        { "src": "model-select", "oport": 0 }
+      ],
+      "config": {}
+    },
+    {
+      "id": "save-image",
+      "type": "save-image",
+      "iports": [
+        { "src": "vae-decode", "oport": 0 }
+      ],
+      "config": {
+        "path": "ming-image.png"
+      }
+    }
+  ],
+  "subpipelines": []
+}

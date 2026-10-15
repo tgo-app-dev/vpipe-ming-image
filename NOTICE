@@ -1,0 +1,24 @@
+Copyright 2026 T-Go LLC
+
+vpipe-ming-image is developed by T-Go LLC.
+
+This product includes software developed at T-Go LLC.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may
+not use this file except in compliance with the License. You may obtain
+a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+This is a plugin for Vpipe (https://github.com/tgo-app-dev/vpipe), which
+is separately licensed under the Apache License, Version 2.0 and carries
+its own NOTICE. Parts of its DiT and its noise generator are derived from
+Vpipe's own source under that license.
+
+THE MING-IMAGE MODEL WEIGHTS ARE NOT COVERED BY THIS LICENSE. This
+repository contains source code only; it downloads no weights and
+redistributes none. Ming-Image-0.1-Design is published by inclusionAI
+under the MIT License, which the operator accepts separately. The
+model's reference implementation (github.com/inclusionAI/Ming-Image) is
+licensed under the Apache License, Version 2.0; this plugin is an
+independent implementation that follows its documented behaviour.

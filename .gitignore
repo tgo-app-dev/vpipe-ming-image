@@ -1,0 +1,15 @@
+# Out-of-source build trees are machine-local, as in the vpipe tree.
+build/
+build-*/
+cmake-build-*/
+
+.DS_Store
+compile_commands.json
+
+# Generated images and run state from a local run, not source.
+*.png
+*.mdb
+__pycache__/
+
+# Editor index (clangd).
+.cache/
